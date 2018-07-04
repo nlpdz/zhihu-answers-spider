@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>各类别答主性别占比</title>
+    <script src="http://echarts.baidu.com/dist/echarts.common.min.js"></script>
+    <script src="../static/js/FileSaver.min.js"></script>
+    <link href="/static/css/tabel.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<h2  style="margin-left: 10%">各类答主回答问题数前三推荐：</h2>
+<div id="tab" style="margin-left: 10%; width:1800px; height:1500px; text-align: center">
+    <table class="GridBackColor">
+        <tbody>
+            <tr class="GridHeadBackColor">
+                <td style="width: 300px;height: 30px;">
+                    <a>类别名称</a>
+                </td>
+                <td>
+                    <a>用户名</a>
+                </td>
+                <td>
+                    <a>个人主页</a>
+                </td>
+                <td>
+                    <a>回答问题数</a>
+                </td>
+                <td>
+                    <a>每个问题收费(元)</a>
+                </td>
+                <td>
+                    <a>粉丝数</a>
+                </td>
+            </tr>
+            {% for i,j,k,l,m,n in z %}
+            <tr onmouseover="javascript:this.bgColor='#C7F8AE';" onmouseout="javascript:this.bgColor='#ffffff';" bgcolor="#ffffff">
+                <td style="width:100px;height: 40px;">
+                    {{ i }}
+                </td>
+                <td>
+                    {{ j }}
+                </td>
+                <td>
+                    {{ k }}
+                </td>
+                <td>
+                    {{ l }}
+                </td>
+                <td>
+                    {{ m }}
+                </td>
+                <td>
+                    {{ n }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
+
+</body>
+</html>

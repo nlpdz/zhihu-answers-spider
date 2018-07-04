@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>各类别答主性别占比</title>
+    <script src="http://echarts.baidu.com/dist/echarts.common.min.js"></script>
+    <script src="../static/js/FileSaver.min.js"></script>
+    <link href="/static/css/tabel.css" rel="stylesheet" type="text/css">
+</head>
+<body style="height: 100%;">
+<h2  style="margin-left: 15%">各类答主性别人数图如下：</h2>
+<div id="chart" style="left: 10%; width: 80%;height: 90%;"></div>
+<script type="text/javascript">
+    var myChart = echarts.init(document.getElementById('chart'));
+    var dataBeast = {{ men_count|safe}};
+    var dataBeauty = {{ women_count|safe}};
+
+//var dataBeast = [660, 841, 521, 820, 578, 727, 598, 792, 701, 660, 729, 782, 660, 841, 541, 513, 792, 701, 660, 729, 782];
+//var dataBeauty = [541, 513, 792, 701, 660, 729, 782, 660, 841, 521, 820, 578, 727, 598, 660, 841, 521, 820, 578, 727, 598];
+var xAxisData = ['心理学', '医学', '职业规划', '理财', '法律', '创业', '房地产', '保险', '旅游', '汽车', '儿童教育', '时间管理', '摄影', '语言学习', '电影', '游戏', '音乐', '时尚', '健身', '美食', '食品安全'];
+var dataTotal = function() {
+    var data = [];
+    for (var i = 0; i < dataBeauty.length; i++) {
+        data.push(dataBeauty[i] + dataBeast[i]);
+    }
+
+    return data;
+}
+
+console.log(dataTotal());
+
+option = {
+    color: ['#019aba', '#7a201f', '#11565d'],
+    backgroundColor: '#000',
+    title: {
+        text: '各类别答主性别人数统计',
+        textStyle: {
+            color: '#fff',
+            fontSize: 18,
+            fontWeight: 'bold',
+
+        },
+        subtext: '作者:XXX',
+        subtextStyle: {
+            color: '#ddd',
+        },
+    },
+    legend: {
+        right: '20%',
+        textStyle: {
+            color: '#666',
+            fontSize: 12,
+        },
+        data: ['男', '女', '总人数'],
+
+//         自定义legend图标
+         data: [
+             {
+                 name: '男',
+                 icon: 'image:https://image.baidu.com/search/detail?ct=503316480&z=0&ipn=d&word=icon%20%E7%94%B7&step_word=&hs=2&pn=0&spn=0&di=2502157920&pi=0&rn=1&tn=baiduimagedetail&is=0%2C0&istype=2&ie=utf-8&oe=utf-8&in=&cl=2&lm=-1&st=-1&cs=26084301%2C2974197424&os=994198045%2C1763650205&simid=0%2C0&adpicid=0&lpn=0&ln=1966&fr=&fmq=1520153519771_R&fm=result&ic=0&s=undefined&se=&sme=&tab=0&width=&height=&face=undefined&ist=&jit=&cg=&bdtype=13&oriquery=&objurl=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%3Dshijue1%2C0%2C0%2C294%2C40%2Fsign%3D708d4079da160924c828aa58bc6e5f8f%2Faa18972bd40735fa20bd699694510fb30f24084b.jpg&fromurl=ipprf_z2C%24qAzdH3FAzdH3Fooo_z%26e3Bev2_z%26e3Bv54AzdH3Fv6jwptejAzdH3F8aad9n8ldd&gsm=0&rpstart=0&rpnum=0',
+                 textStyle: {
+                     color: 'red'
+                 }
+             },
+             {
+                 name: '女',
+                 icon: 'image:https://image.baidu.com/search/detail?ct=503316480&z=0&ipn=d&word=icon%20%E5%A5%B3&step_word=&hs=2&pn=9&spn=0&di=62996550560&pi=0&rn=1&tn=baiduimagedetail&is=0%2C0&istype=2&ie=utf-8&oe=utf-8&in=&cl=2&lm=-1&st=-1&cs=178273473%2C418146073&os=898029997%2C2805148171&simid=0%2C0&adpicid=0&lpn=0&ln=1331&fr=&fmq=1520153556566_R&fm=detail&ic=0&s=undefined&se=&sme=&tab=0&width=&height=&face=undefined&ist=&jit=&cg=&bdtype=13&oriquery=&objurl=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F5243fbf2b211931328ef088b6e380cd791238d59.jpg&fromurl=ippr_z2C%24qAzdH3FAzdH3Frwtxtg_z%26e3Bv54AzdH3Fri5p5v5ry6t2ipAzdH3F8nn08dbnd&gsm=0&rpstart=0&rpnum=0',
+                 textStyle: {
+                     color: 'red'
+                 }
+             },
+             {
+                 name: '总人数',
+                 icon: 'image:https://image.baidu.com/search/detail?ct=503316480&z=0&ipn=d&word=icon%20%E6%80%BB%E4%BA%BA&step_word=&hs=2&pn=18&spn=0&di=101926579701&pi=0&rn=1&tn=baiduimagedetail&is=0%2C0&istype=2&ie=utf-8&oe=utf-8&in=&cl=2&lm=-1&st=-1&cs=1841288163%2C981321103&os=867484783%2C2102013009&simid=3350927964%2C179391348&adpicid=0&lpn=0&ln=1992&fr=&fmq=1520153631722_R&fm=result&ic=0&s=undefined&se=&sme=&tab=0&width=&height=&face=undefined&ist=&jit=&cg=&bdtype=0&oriquery=&objurl=http%3A%2F%2Fthumb106.hellorf.com%2Fpreview%2F278904704.jpg&fromurl=ippr_z2C%24qAzdH3FAzdH3Fooo_z%26e3Bijss56u_z%26e3Bv54AzdH3Fri5p5AzdH3Ffi5oAzdH3Fd0bla90a9&gsm=0&rpstart=0&rpnum=0',
+                 textStyle: {
+                     color: 'red'
+                 }
+             },
+         ]
+    },
+    tooltip: {
+        show: true,
+        trigger: 'axis',
+        axisPointer: {
+            type: 'cross',
+            crossStyle: {
+                color: '#ddd',
+
+            },
+
+        },
+    },
+
+    toolbox: {
+        right: 20,
+        feature: {
+            saveAsImage: {},
+            restore: {},
+            dataView: {},
+            dataZoom: {},
+            magicType: {
+                type: ['line', 'bar']
+            },
+            // brush: {},
+        }
+    },
+
+    grid: {
+        left: 5,
+        right: 20,
+        top: 80,
+        bottom: 50,
+        containLabel: true,
+    },
+    xAxis: {
+        show: true,
+
+        axisLabel: {
+            interval: 0,
+            rotate: -20,
+            margin: 30,
+            textStyle: {
+                color: '#ddd',
+                align: 'center'
+
+            },
+        },
+        axisTick: {
+            alignWithLabel: true,
+            lineStyle: {
+                color: '#ddd',
+
+            },
+        },
+        data: xAxisData,
+    },
+    yAxis: [{
+            type: 'value',
+            // name:'(人/次)',
+            // nameTextStyle:{
+            //     color:'#ddd',
+            // },
+            axisLabel: {
+                textStyle: {
+                    color: '#ddd',
+                },
+            },
+            axisTick: {
+                alignWithLabel: true,
+                lineStyle: {
+                    color: '#ddd',
+
+                },
+            },
+            splitLine: {
+                show: false,
+            },
+        },
+        {
+            // type:'value',
+            // name:'总人次',
+            // nameTextStyle:{
+            //     color:'#ddd',
+            // },
+            // axisLabel:{
+            //  textStyle:{
+            //       color:'#ddd',
+            //  },
+            // },
+            // axisTick:{
+            //   alignWithLabel:true,
+            //   lineStyle:{
+            //       color:'#ddd',
+
+            //   },
+            // },
+            // splitLine:{
+            //     show:false,
+            // },
+        },
+    ],
+    dataZoom: [{
+            show: true,
+            height: 20,
+            bottom: 10,
+            start: 10,
+            end: 60,
+            handleIcon: 'path://M306.1,413c0,2.2-1.8,4-4,4h-59.8c-2.2,0-4-1.8-4-4V200.8c0-2.2,1.8-4,4-4h59.8c2.2,0,4,1.8,4,4V413z',
+            handleSize: '110%',
+            handleStyle: {
+                color: "#d3dee5",
+            },
+            textStyle: {
+                color: "#fff"
+            },
+            borderColor: "#90979c",
+        },
+        {
+            type: "inside"
+        }
+    ],
+    series: [{
+            type: 'bar',
+            name: '男',
+            stack: '游客人数',
+            data: dataBeast,
+            label: {
+                normal: {
+                    show: true,
+                    position: 'insideTop',
+                    offset: [0, 20],
+                    textStyle: {
+                        color: '#000',
+                    },
+                },
+                emphasis: {
+                    textStyle: {
+                        color: '#fff',
+                    },
+                },
+            },
+        },
+        {
+            type: 'bar',
+            name: '女',
+            stack: '游客人数',
+            data: dataBeauty,
+            label: {
+                normal: {
+                    show: true,
+                    position: 'insideTop',
+                    offset: [0, 20],
+                    textStyle: {
+                        color: '#000',
+                    },
+                },
+                emphasis: {
+                    textStyle: {
+                        color: '#fff',
+                    },
+                },
+            },
+        },
+        {
+            type: 'line',
+            name: '总人数',
+            yAxisIndex: 1,
+            stack: '游客人数',
+            data: dataTotal(),
+            label: {
+                normal: {
+                    show: true,
+                    position: 'insideTop',
+                    offset: [0, -30],
+                    textStyle: {
+                        color: '#666',
+                    },
+                },
+                emphasis: {
+                    textStyle: {
+                        color: '#fff',
+                    },
+                },
+            },
+            // symbol:'image://../imgs/point1.png',
+            symbolSize: 8,
+            itemStyle: {
+                normal: {
+                    // "color": "#01B3D7",
+                    barBorderRadius: 0,
+                    label: {
+                        show: false,
+                        position: "top",
+                        formatter: function(p) {
+                            return p.value > 0 ? (p.value) : '';
+                        }
+                    }
+                }
+            },
+            lineStyle: {
+                normal: {
+                    color: '#01B3D7',
+                    width: 1,
+
+                },
+            },
+        },
+    ]
+};myChart.setOption(option);
+</script>
+<br>
+<br>
+<br>
+<br>
+
+<h2  style="margin-left: 15%">各类答主性别人数及占比表格如下：</h2>
+<div id="tab" style="margin-left: 15%; width:1800px; height:1500px; text-align: center">
+<table class="GridBackColor" style="text-align: center">
+        <tbody>
+            <tr class="GridHeadBackColor">
+                <td style="width: 300px;height: 30px;">
+                    <a>类别名称</a>
+                </td>
+                <td>
+                    <a>男答主性别数</a>
+                </td>
+                <td>
+                    <a>男答主占比</a>
+                </td>
+                <td>
+                    <a>女答主性别数</a>
+                </td>
+                <td>
+                    <a>女答主占比</a>
+                </td>
+            </tr>
+            {% for i,j,k,l,m in z %}
+            <tr onmouseover="javascript:this.bgColor='#C7F8AE';" onmouseout="javascript:this.bgColor='#ffffff';" bgcolor="#ffffff">
+                <td style="width:100px;height: 40px;">
+                    {{ i }}
+                </td>
+                <td>
+                    {{ j }}
+                </td>
+                <td>
+                    {{ k }}
+                </td>
+                <td>
+                    {{ l }}
+                </td>
+                <td>
+                    {{ m }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    </div>
+</body>
+</html>

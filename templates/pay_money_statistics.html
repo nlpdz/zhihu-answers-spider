@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>各类别答主性别占比</title>
+    <script src="http://echarts.baidu.com/dist/echarts.common.min.js"></script>
+    <script src="../static/js/FileSaver.min.js"></script>
+    <link href="/static/css/tabel.css" rel="stylesheet" type="text/css">
+</head>
+<body style="height: 100%;">
+<h2  style="margin-left: 15%">各类答主人数，总收入资金以及人均每个问题收入资金：(点击下方按钮可单独查看每一项)</h2>
+<div id="chart" style="left: 10%; width: 80%;height: 90%;"></div>
+<script type="text/javascript">
+    var myChart = echarts.init(document.getElementById('chart'));
+    var anwser_number = {{ anwser_number|safe}};
+    var price_count = {{ price_count|safe}};
+    var ave = {{ ave|safe}};
+
+
+option = {
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    legend: {
+        data:['人数（百）','总价值(千)','平均每人每个问题需支付（元）']
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis : [
+        {
+            type : 'category',
+            data : ['心理学','医学','职业规划','理财','法律','创业','房地产','保险','旅游','汽车','儿童教育','时间管理','摄影','语言学习','电影','游戏','音乐','时尚','健身','美食','食品安全']
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value'
+        }
+    ],
+    series : [
+        {
+            name:'人数（百）',
+            type:'bar',
+            data:anwser_number
+        },
+
+        {
+            name:'总价值(千)',
+            type:'bar',
+            data:price_count
+        },
+
+        {
+            name:'平均每人每个问题需支付（元）',
+            type:'bar',
+            data:ave,
+            markLine : {
+                lineStyle: {
+                    normal: {
+                        type: 'dashed'
+                    }
+                },
+                data : [
+                    [{type : 'min'}, {type : 'max'}]
+                ]
+            }
+        },
+
+
+    ]
+};myChart.setOption(option);
+</script>
+<br>
+<br>
+<br>
+<br>
+
+<h2  style="margin-left: 15%">各类答主人数，总收入金额，人均每个问题收入资金表格如下：</h2>
+<div id="tab" style="margin-left: 15%; width:1800px; height:1500px; text-align: center">
+
+    <table class="GridBackColor">
+        <tbody>
+            <tr class="GridHeadBackColor">
+                <td style="width: 300px;height: 30px;">
+                    <a>类别名称</a>
+                </td>
+                <td>
+                    <a>类别答主人数</a>
+                </td>
+                <td>
+                    <a>总金额</a>
+                </td>
+                <td>
+                    <a>平均每人每个问题需支付</a>
+                </td>
+            </tr>
+            {% for i,j,k,l in z %}
+            <tr onmouseover="javascript:this.bgColor='#C7F8AE';" onmouseout="javascript:this.bgColor='#ffffff';" bgcolor="#ffffff">
+                <td style="width:100px;height: 40px;">
+                    {{ i }}
+                </td>
+                <td>
+                    {{ j }}
+                </td>
+                <td>
+                    {{ k }}
+                </td>
+                <td>
+                    {{ l }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
